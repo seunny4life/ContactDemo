@@ -1,9 +1,11 @@
 package com.example.contactdemo;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -21,15 +23,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
 
 
         public TextView display;
-        public ImageButton editImage, deleteImage;
+        public Button edit, delete;
 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             display = itemView.findViewById(R.id.displayText);
-            editImage = itemView.findViewById(R.id.imageEdit);
-            deleteImage = itemView.findViewById(R.id.imageDelete);
+            edit = itemView.findViewById(R.id.buttonEdit);
+            delete = itemView.findViewById(R.id.buttonDelete);
         }
     }
 
@@ -41,15 +43,29 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View listItem = layoutInflater.inflate(R.layout.simple_list, parent, false);
+        MyViewHolder viewHolder = new MyViewHolder(listItem);
+        return viewHolder;
+
+       /* View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.simple_list, parent, false);
 
-        return new MyViewHolder(view);
+        return new MyViewHolder(view);*/
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
+        String fullName = contactsList.get(position).getFirstName() + " "
+                + contactsList.get(position).getLastName() + " "
+                + contactsList.get(position).getPhoneNumber() + " "
+                + contactsList.get(position).getEmail();
+
+        TextView textView = holder.display;
+        final Button editButton = holder.edit;
+        Button delete = holder.delete;
+        textView.setText(fullName);
       /*  holder.display.setText(String.format(Locale.getDefault(), "%s, %s, %s, %s",
                 contactsList.get(position).getFirstName(),
                 contactsList.get(position).getLastName(),
@@ -71,13 +87,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
             }
         });*/
 
-        String fullName = contactsList.get(position).getFirstName() + " "
+        /*String fullName = contactsList.get(position).getFirstName() + " "
                 + contactsList.get(position).getLastName() + " "
                 + contactsList.get(position).getPhoneNumber() + " "
                 + contactsList.get(position).getEmail();
 
         holder.display.setText(fullName);
-
+*/
     }
 
 
